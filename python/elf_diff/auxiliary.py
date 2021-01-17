@@ -19,15 +19,19 @@
 # this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-def tendencySymbol(from_size, to_size):
-   if from_size > to_size:
-      return "*"
-   return ""
+def tendency_symbol(from_size, to_size):
+    if from_size > to_size:
+        return "*"
+    return ""
 
-def formatMemChange(what, from_size, to_size):
-   tendency_symbol = tendencySymbol(from_size, to_size)
-   difference = to_size - from_size
-   return "%s: %d -> %d bytes (%+d bytes) %s" % (what, from_size, to_size, difference, tendency_symbol)
 
-def listIntersection(l1, l2):
-   return sorted(list(set(l1) & set(l2)))
+def format_mem_change(what, from_size, to_size):
+    tendency_sym = tendency_symbol(from_size, to_size)
+    difference = to_size - from_size
+    return "%s: %d -> %d bytes (%+d bytes) %s" % (
+        what, from_size, to_size, difference, tendency_sym
+    )
+
+
+def list_intersection(l1, l2):
+    return sorted(list(set(l1) & set(l2)))
