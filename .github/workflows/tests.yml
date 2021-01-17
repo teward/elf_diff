@@ -1,0 +1,36 @@
+name: Python Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        python-version: [2.7, 3.6]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Python requirements
+        run: |
+          - python -m pip install -r python/requirements.txt
+          
+      - name: Update apt data
+        run: |
+          sudo apt update
+      - name: Install wkhtmltopdf
+        run: |
+          sudo apt install -y wkhtmltopdf
+      - name: Install xvfb
+        run: |
+          sudo apt install -y xvfb
+      
+      - name: Run Python tests via xvfb-run
+        run: |
+          xvfb-run -a -s "-screen 0 640x480x16" python testing/test.py
