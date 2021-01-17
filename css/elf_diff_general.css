@@ -36,8 +36,8 @@ table, th, td {
 tr:nth-child(even) {background-color: #f2f2f2;}
 
 /* Sortability of tables */
-table.sortable  
-   th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
+table.sortable,
+th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
    content: " \25B4\25BE" 
 }
 
@@ -53,10 +53,17 @@ tbody { display: table-header-group; /* makes it sizeable */ }
    width: 500px;
 }
 
+/*noinspection CssUnusedSymbol*/
 .deterioration { background: #FFAAAA; }
-.improvement { background: #AAFFAA; } 
+
+/*noinspection CssUnusedSymbol*/
+.improvement { background: #AAFFAA; }
+
+/*noinspection CssUnusedSymbol*/
 .unchanged { }
-.diff_chg { background: #FFAAAA; } 
+
+/*noinspection CssUnusedSymbol*/
+.diff_chg { background: #FFAAAA; }
 
 a:link {
    text-decoration: none;
@@ -78,13 +85,17 @@ a:active {
    color: blue;
 }
 
+/*noinspection CssUnusedSymbol*/
 .symbol_name {
    font-family: monospace;
-} 
+}
+
+/*noinspection CssUnusedSymbol*/
 .number {
    font-family: monospace;
 }
 
+/*noinspection CssUnusedSymbol*/
 .source {
    color: royalblue;
    font-weight: bold;
