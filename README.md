@@ -38,7 +38,8 @@ The following procedure is required to setup _elf_diff_.
 
 1. Install Python version >= 2.7
 2. Clone the [_elf_diff_](https://github.com/CapeLeidokos/_elf_diff_) repo from github.
-3. Install required packages via pip3 as `pip3 install -r python/requirements.txt`
+3. Run `make` from within the _elf_diff_ repo or directly install required packages
+via pip as `pip install -r python/requirements.txt`
 4. Add the `bin` directory of the _elf_diff_ repo to your platform search path
 
 ## Usage
