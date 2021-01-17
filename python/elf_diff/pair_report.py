@@ -93,7 +93,8 @@ class PairReport(Report):
          table_visible = True
             
       return [table_html, table_visible, html.highlightNumber(size_delta)]
-      
+
+   # noinspection DuplicatedCode
    def generateDisappearedSymbolsTableHTML(self):
       
       old_binary = self.binary_pair.old_binary
@@ -119,8 +120,9 @@ class PairReport(Report):
       else:
          table_visible = True
             
-      return [table_html, table_visible, html.highlightNumber(-overal_symbol_size)]  
-   
+      return [table_html, table_visible, html.highlightNumber(-overal_symbol_size)]
+
+   # noinspection DuplicatedCode
    def generateNewSymbolsTableHTML(self):
       
       new_binary = self.binary_pair.new_binary
@@ -210,7 +212,8 @@ class PairReport(Report):
             html_lines.append("%s\n" % (symbol_differences))
             
       return "\n".join(html_lines)
-   
+
+   # noinspection DuplicatedCode
    def generateDisappearedSymbolDetailsHTML(self):
       
       html_lines = []
@@ -229,7 +232,8 @@ class PairReport(Report):
          html_lines.append("</pre>")
             
       return "\n".join(html_lines)
-      
+
+   # noinspection DuplicatedCode
    def generateNewSymbolDetailsHTML(self):
       
       html_lines = []

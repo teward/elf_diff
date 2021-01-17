@@ -103,7 +103,8 @@ class TestCommandLineArgs(unittest.TestCase):
       self.assertTrue(os.path.isfile(pdf_file))
       self.assertTrue(os.path.isfile(html_file))
       self.assertTrue(os.path.isfile(template_file))
-       
+
+   # noinspection DuplicatedCode
    def test_driven_pair_report(self):
       
       driver_yaml_file = "pair_report.driver.yml"
@@ -137,7 +138,8 @@ class TestCommandLineArgs(unittest.TestCase):
       self.assertTrue(os.path.isfile(pdf_file))
       self.assertTrue(os.path.isfile(html_file))
       self.assertTrue(os.path.isfile(template_file))
-       
+
+   # noinspection DuplicatedCode
    def test_driven_mass_report(self):
       
       driver_yaml_file = "mass_report.driver.yml"
