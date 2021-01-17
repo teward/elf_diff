@@ -16,15 +16,15 @@
 
 ## A Brief Introduction
 
-This tool compares pairs of ELF binary files and provides information about differences in the contained symbols with respect to the space that they occupy in program memory (functions and global data) and in RAM (global data). Binary pairs that are passed to _elf_diff_ are typically two versions of the same program/library/firmware. _elf_diff_ can help you to find out about the impact of your changes on your code's resource consumption.
+This tool compares pairs of ELF binary files and provides information about differences in the contained symbols with respect to the space that they occupy in program memory (functions and global data) and in RAM (global data). Binary pairs that are passed to _elf_diff_ are typically two versions of the same program/library/firmware. _elf_diff_ can help you find out about the impact of your changes on your code's resource consumption.
 
 The differences between the binaries are summarized in tables that contain information about persistent, disappeared and new symbols. _elf_diff_ also attempts to find pairs of matching symbols that might have been subject to renaming or signature changes (modified function arguments). Please be warned that the means to determine such symbol relations are very limited when working with binaries. False positives will result.
 
-For all those symbols that have been subject to changes and also for the new and disappeared symbols, the tool provides diff-like comparisons of the disassembly.
+For all those symbols that have been subject to change and also for the new and disappeared symbols, the tool provides diff-like comparisons of the disassembly.
 
 All results are presented in either HTML or pdf files. HTML documents are cross-linked to conveniently allow jumping back and forth between bits of information, e.g. tabular information and symbol disassemblies. Du to the potentially large amount of information, some parts of the HTML reports are ommitted in the pdf files.
 
-_elf_diff_ has two modes of operation, pair-reports and mass-reports. While the former compares two binaries, the latter generates an overview-report for a set of binary-pairs. Such overview-reports list only the changes in terms of symbol sizes and the amount of symbols, no disassembly is provided to gain feasible document sizes.
+_elf_diff_ has two modes of operation, pair-reports and mass-reports. While the former compares two binaries, the latter generates an overview-report for a set of binary-pairs. Such overview-reports list only the changes (in terms of symbol size, and the amount of symbols), no disassembly is provided to gain feasible document sizes.
 
 ## Requirements
 
@@ -34,7 +34,7 @@ elf_diff works and is automatically tested with Python 2 and 3.
 
 ## Setup
 
-The following procedure is required to setup _elf_diff_.
+The following procedure is required to set up _elf_diff_.
 
 1. Install Python version >= 2.7
 2. Clone the [_elf_diff_](https://github.com/CapeLeidokos/_elf_diff_) repo from github.
@@ -86,7 +86,7 @@ By using the driver file, we can now run a mass-report as
 elf_diff --mass_report --driver_file my_elf_diff_driver.yaml
 ```
 
-This will generate a HTML file `elf_diff_mass_report.html` in your current working directory.
+This will generate an HTML file `elf_diff_mass_report.html` in your current working directory.
 
 ### Generating pdf-Files
 
@@ -144,7 +144,7 @@ build_info: >
 
 ### Using Alias Strings
 
-If you want to obtain anonymized reports, it is not desirable to reveile details about your user name (home directory) or the directory structure. In such a case, the binary filenames can be replaced by alias wherever they would appear in the reports. 
+If you want to obtain anonymized reports, it is not desirable to reveile details about your username (home directory), or the directory structure. In such a case, the binary filenames can be replaced by alias wherever they would appear in the reports. 
 
 Supply alias names using the `old_alias` and `new_alias` parameters for the old or the new version of the binaries, respectively.
 
