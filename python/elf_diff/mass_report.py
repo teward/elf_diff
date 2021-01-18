@@ -31,8 +31,7 @@ class MassReport(Report):
 
     def __init__(self, settings):
 
-        self.settings = settings
-
+        super().__init__(settings)
         self.binary_pairs = []
 
         if len(self.settings.mass_report_members) == 0:
@@ -97,7 +96,7 @@ class MassReport(Report):
         return "\n".join(table_lines_html)
 
     # noinspection PyUnusedLocal
-    def configure_jinja_keywords(self, skip_details):
+    def configure_jinja_keywords(self, skip_details=False):
 
         import datetime
 

@@ -30,8 +30,7 @@ class PairReport(Report):
 
     def __init__(self, settings):
 
-        self.settings = settings
-
+        super().__init__(settings)
         self.validate_settings()
 
         self.binary_pair = BinaryPair(settings, settings.old_binary_filename,
@@ -347,74 +346,74 @@ class PairReport(Report):
             binary_details_visible = True
 
         return {
-            "page_title": u"ELF Binary Comparison - (c) 2019 by noseglasses"
-            , "doc_title": doc_title
-            , "elf_diff_repo_base": self.settings.repo_path
-            , "old_binary_file": html.escape_string(self.settings.old_alias)
-            , "new_binary_file": html.escape_string(self.settings.new_alias)
+            "page_title": u"ELF Binary Comparison - (c) 2019 by noseglasses",
+            "doc_title": doc_title,
+            "elf_diff_repo_base": self.settings.repo_path,
+            "old_binary_file": html.escape_string(self.settings.old_alias),
+            "new_binary_file": html.escape_string(self.settings.new_alias),
 
-            , "code_size_old_overall": str(old_binary.progmem_size)
-            , "code_size_new_overall": str(new_binary.progmem_size)
-            , "code_size_change_overall": html.format_number_delta(old_binary.progmem_size,
-                                                                   new_binary.progmem_size)
-            , "static_ram_old_overall": str(old_binary.static_ram_size)
-            , "static_ram_new_overall": str(new_binary.static_ram_size)
-            , "static_ram_change_overall": html.format_number_delta(old_binary.static_ram_size,
-                                                                    new_binary.static_ram_size)
-            , "text_size_old_overall": str(old_binary.text_size)
-            , "text_size_new_overall": str(new_binary.text_size)
-            , "text_size_change_overall": html.format_number_delta(old_binary.text_size,
-                                                                   new_binary.text_size)
-            , "data_size_old_overall": str(old_binary.data_size)
-            , "data_size_new_overall": str(new_binary.data_size)
-            , "data_size_change_overall": html.format_number_delta(old_binary.data_size,
-                                                                   new_binary.data_size)
-            , "bss_size_old_overall": str(old_binary.bss_size)
-            , "bss_size_new_overall": str(new_binary.bss_size)
-            , "bss_size_change_overall": html.format_number_delta(old_binary.bss_size,
-                                                                  new_binary.bss_size)
+            "code_size_old_overall": str(old_binary.progmem_size),
+            "code_size_new_overall": str(new_binary.progmem_size),
+            "code_size_change_overall": html.format_number_delta(old_binary.progmem_size,
+                                                                 new_binary.progmem_size),
+            "static_ram_old_overall": str(old_binary.static_ram_size),
+            "static_ram_new_overall": str(new_binary.static_ram_size),
+            "static_ram_change_overall": html.format_number_delta(old_binary.static_ram_size,
+                                                                  new_binary.static_ram_size),
+            "text_size_old_overall": str(old_binary.text_size),
+            "text_size_new_overall": str(new_binary.text_size),
+            "text_size_change_overall": html.format_number_delta(old_binary.text_size,
+                                                                 new_binary.text_size),
+            "data_size_old_overall": str(old_binary.data_size),
+            "data_size_new_overall": str(new_binary.data_size),
+            "data_size_change_overall": html.format_number_delta(old_binary.data_size,
+                                                                 new_binary.data_size),
+            "bss_size_old_overall": str(old_binary.bss_size),
+            "bss_size_new_overall": str(new_binary.bss_size),
+            "bss_size_change_overall": html.format_number_delta(old_binary.bss_size,
+                                                                new_binary.bss_size),
 
-            , "total_symbols_old": str(len(old_binary.symbols.keys()))
-            , "total_symbols_new": str(len(new_binary.symbols.keys()))
+            "total_symbols_old": str(len(old_binary.symbols.keys())),
+            "total_symbols_new": str(len(new_binary.symbols.keys())),
 
-            , "num_persisting_symbols": str(len(self.binary_pair.persisting_symbol_names))
-            , "num_disappeared_symbols": str(self.binary_pair.num_symbols_disappeared)
-            , "num_new_symbols": str(self.binary_pair.num_symbols_new)
-            , "num_similar_symbols": str(num_similar_symbols)
+            "num_persisting_symbols": str(len(self.binary_pair.persisting_symbol_names)),
+            "num_disappeared_symbols": str(self.binary_pair.num_symbols_disappeared),
+            "num_new_symbols": str(self.binary_pair.num_symbols_new),
+            "num_similar_symbols": str(num_similar_symbols),
 
-            , "persisting_symbols_table_visible": persisting_symbols_table_visible
-            , "disappeared_symbols_table_visible": disappeared_symbols_table_visible
-            , "new_symbols_table_visible": new_symbols_table_visible
-            , "similar_symbols_table_visible": similar_symbols_table_visible
+            "persisting_symbols_table_visible": persisting_symbols_table_visible,
+            "disappeared_symbols_table_visible": disappeared_symbols_table_visible,
+            "new_symbols_table_visible": new_symbols_table_visible,
+            "similar_symbols_table_visible": similar_symbols_table_visible,
 
-            , "persisting_symbols_table": persisting_symbols_table
-            , "disappeared_symbols_table": disappeared_symbols_table
-            , "new_symbols_table": new_symbols_table
-            , "similar_symbols_table": similar_symbols_table
+            "persisting_symbols_table": persisting_symbols_table,
+            "disappeared_symbols_table": disappeared_symbols_table,
+            "new_symbols_table": new_symbols_table,
+            "similar_symbols_table": similar_symbols_table,
 
-            , "persisting_symbols_delta": persisting_symbols_delta
-            , "disappeared_symbols_size": disappeared_symbols_size
-            , "new_symbols_size": new_symbols_size
+            "persisting_symbols_delta": persisting_symbols_delta,
+            "disappeared_symbols_size": disappeared_symbols_size,
+            "new_symbols_size": new_symbols_size,
 
-            , "details_visibility": details_visibility
+            "details_visibility": details_visibility,
 
-            , "persisting_symbol_details_html": persisting_symbol_details_html
-            , "disappeared_symbol_details_html": disappeared_symbol_details_html
-            , "new_symbol_details_html": new_symbol_details_html
-            , "similar_symbol_details_html": similar_symbol_details_html
+            "persisting_symbol_details_html": persisting_symbol_details_html,
+            "disappeared_symbol_details_html": disappeared_symbol_details_html,
+            "new_symbol_details_html": new_symbol_details_html,
+            "similar_symbol_details_html": similar_symbol_details_html,
 
-            , "binary_details_visible": binary_details_visible
+            "binary_details_visible": binary_details_visible,
 
-            , "old_binary_info_visible": old_binary_info_visible
-            , "new_binary_info_visible": new_binary_info_visible
+            "old_binary_info_visible": old_binary_info_visible,
+            "new_binary_info_visible": new_binary_info_visible,
 
-            , "old_binary_info": html.escape_string(self.settings.old_binary_info)
-            , "new_binary_info": html.escape_string(self.settings.new_binary_info)
+            "old_binary_info": html.escape_string(self.settings.old_binary_info),
+            "new_binary_info": html.escape_string(self.settings.new_binary_info),
 
-            , "build_info_visible": build_info_visible
-            , "build_info": html.escape_string(self.settings.build_info)
+            "build_info_visible": build_info_visible,
+            "build_info": html.escape_string(self.settings.build_info),
 
-            , "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
 
     @staticmethod

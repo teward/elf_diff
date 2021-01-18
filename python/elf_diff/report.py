@@ -19,39 +19,28 @@
 # this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+import tempfile
+import pdfkit
+
 import elf_diff.html as html
 
 
-# noinspection PyProtectedMember,PyUnresolvedReferences
+# noinspection PyProtectedMember
 class Report(object):
 
-    def generate(self):
+    def __init__(self, settings):
+        self.settings = settings
 
-        import codecs
+    def configure_jinja_keywords(self, skip_details):
+        raise NotImplementedError
 
-        if self.settings.html_file:
-            html_file = self.settings.html_file
-        else:
-            html_file = "elf_diff_" + self.get_report_basename() + ".html"
+    @staticmethod
+    def get_report_basename():
+        raise NotImplementedError
 
-        print("Writing html file " + html_file)
-        with codecs.open(html_file, "w", "utf-8") as f:
-            self.write_html(f)
-
-        if self.settings.pdf_file:
-            import tempfile
-
-            tmp_html_file = tempfile._get_default_tempdir() + "/" + \
-                next(tempfile._get_candidate_names()) + ".html"
-
-            with codecs.open(tmp_html_file, "w", "utf-8") as f:
-                self.write_html(f, skip_details=True)
-
-            import pdfkit
-            pdfkit.from_url(tmp_html_file, self.settings.pdf_file)
-
-            import os
-            os.remove(tmp_html_file)
+    @staticmethod
+    def get_html_template():
+        raise NotImplementedError
 
     def write_html(self, out_file, skip_details=False):
 
@@ -61,3 +50,23 @@ class Report(object):
                                       self.get_html_template(),
                                       out_file,
                                       keywords)
+
+    def generate(self):
+
+        if self.settings.html_file:
+            html_file = self.settings.html_file
+        else:
+            html_file = "elf_diff_" + self.get_report_basename() + ".html"
+
+        print("Writing html file " + html_file)
+        with open(html_file, "w", "utf-8") as f:
+            self.write_html(f)
+
+        if self.settings.pdf_file:
+            tmp_html_file = tempfile.NamedTemporaryFile(suffix='.html')
+
+            self.write_html(tmp_html_file, skip_details=True)
+
+            pdfkit.from_url(tmp_html_file, self.settings.pdf_file)
+
+            tmp_html_file.close()
