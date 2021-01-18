@@ -37,7 +37,8 @@ class PairReport(Report):
         self.binary_pair = BinaryPair(settings, settings.old_binary_filename,
                                       settings.new_binary_filename)
 
-    def get_report_basename(self):
+    @staticmethod
+    def get_report_basename():
         return "pair_report"
 
     def validate_settings(self):
@@ -416,7 +417,8 @@ class PairReport(Report):
             , "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
 
-    def get_html_template(self):
+    @staticmethod
+    def get_html_template():
         return PairReport.html_template_file
 
 

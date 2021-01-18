@@ -37,7 +37,8 @@ class MassReport(Report):
 
         self.generate_pair_reports()
 
-    def get_report_basename(self):
+    @staticmethod
+    def get_report_basename():
         return "mass_report"
 
     def generate_pair_reports(self):
@@ -119,7 +120,8 @@ class MassReport(Report):
             "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
 
-    def get_html_template(self):
+    @staticmethod
+    def get_html_template():
         return MassReport.html_template_file
 
 

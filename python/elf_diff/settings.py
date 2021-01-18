@@ -137,7 +137,8 @@ class Settings(object):
         for parameter in self.parameters:
             setattr(self, parameter.name, parameter.default)
 
-    def deprecated(self, desc):
+    @staticmethod
+    def deprecated(desc):
         return "{desc} [deprecated]".format(desc=desc)
 
     def parse_command_line_args(self):
