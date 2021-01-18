@@ -19,6 +19,8 @@
 # this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+import platform
+
 from elf_diff.error_handling import unrecoverable_error
 
 

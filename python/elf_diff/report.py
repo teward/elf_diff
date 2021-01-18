@@ -19,8 +19,13 @@
 # this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+
+import platform
 import tempfile
 import pdfkit
+
+if platform.python_version_tuple() < [3, 0, 0]:
+    import codecs
 
 import elf_diff.html as html
 
@@ -59,8 +64,15 @@ class Report(object):
             html_file = "elf_diff_" + self.get_report_basename() + ".html"
 
         print("Writing html file " + html_file)
-        with open(html_file, mode="wb", encoding="utf-8") as f:
-            self.write_html(f)
+
+        # Python 2 and Python 3 use different mechanisms for open();
+        # this explains why codecs.open was used.
+        if platform.python_version_tuple() < [3, 0, 0]:
+            with codecs.open(html_file, "w", "utf-8") as f:
+                self.write_html(f)
+        else:
+            with open(html_file, mode="w", encoding="utf-8") as f:
+                self.write_html(f)
 
         if self.settings.pdf_file:
             tmp_html_file = tempfile.NamedTemporaryFile(suffix='.html')
