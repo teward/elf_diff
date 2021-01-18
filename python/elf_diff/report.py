@@ -24,7 +24,7 @@ import platform
 import tempfile
 import pdfkit
 
-if platform.python_version_tuple() < [3, 0, 0]:
+if platform.python_version_tuple() < (3, 0, 0):
     import codecs
 
 import elf_diff.html as html
