@@ -47,6 +47,23 @@ class Settings(object):
 
     def __init__(self, repo_path):
 
+        self.driver_template_file = None
+        self.mass_report = None
+        self.driver_template_file = None
+        self.bin_dir = None
+        self.bin_prefix = None
+        self.bin_dir = None
+        self.bin_prefix = None
+        self.bin_dir = None
+        self.bin_prefix = None
+        self.old_info_file = None
+        self.old_info_file = None
+        self.old_info_file = None
+        self.old_info_file = None
+        self.new_info_file = None
+        self.new_info_file = None
+        self.new_info_file = None
+        self.new_info_file = None
         self.repo_path = repo_path
 
         self.parameters = []

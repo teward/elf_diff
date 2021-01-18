@@ -109,6 +109,7 @@ class BinaryPair(object):
 
         sorted_symbol_pairs = []
         for symbol_tuple in sorted_by_diff:
+            # noinspection PyUnresolvedReferences
             index = symbol_tuple[0]
             sorted_symbol_pairs.append(symbol_pairs[index])
 

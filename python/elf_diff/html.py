@@ -85,15 +85,12 @@ def post_highlight_source_code_remove_tags(src):
 
 
 def format_number_delta(old_size, new_size):
-    difference = new_size - old_size
     return highlight_number(new_size - old_size)
 
 
 # noinspection PyUnboundLocalVariable
 def configure_template(settings, template_filename, keywords):
     import jinja2
-    import os
-    import inspect
     from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
     template_path = settings.repo_path + "/html"

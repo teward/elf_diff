@@ -19,12 +19,10 @@
 # this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-from elf_diff.error_handling import unrecoverable_error
-
 import elf_diff.html as html
 
 
-# noinspection PyProtectedMember,PyProtectedMember
+# noinspection PyProtectedMember,PyUnresolvedReferences
 class Report(object):
 
     def generate(self):

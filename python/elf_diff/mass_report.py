@@ -19,7 +19,8 @@
 # this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-from elf_diff.report import Report, unrecoverable_error
+from elf_diff.error_handling import unrecoverable_error
+from elf_diff.report import Report
 from elf_diff.binary_pair import BinaryPair
 
 import elf_diff.html as html
@@ -84,10 +85,6 @@ class MassReport(Report):
         table_lines_html = []
 
         for binary_pair in self.binary_pairs:
-            num_persisting_symbols = str(len(binary_pair.persisting_symbol_names))
-            num_disappeared_symbols = str(binary_pair.num_symbols_disappeared)
-            num_new_symbols = str(binary_pair.num_symbols_new)
-
             table_lines_html.append(
                 "<tr><td>{short_name}</td><td>{num_persisting_symbols}</td>"
                 "<td>{num_disappeared_symbols}</td><td>{num_new_symbols}</td></tr>\n".format(
@@ -99,7 +96,7 @@ class MassReport(Report):
 
         return "\n".join(table_lines_html)
 
-    def configure_jinja_keywords(self, skip_details):
+    def configure_jinja_keywords(self):
 
         import datetime
 
