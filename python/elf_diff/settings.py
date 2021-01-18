@@ -267,11 +267,11 @@ class Settings(object):
 
         if self.old_binary_filename and not os.path.isfile(self.old_binary_filename):
             unrecoverable_error(
-                "Old binary'%s\' is not a file or cannot be found" % (self.old_binary_filename))
+                "Old binary'%s\' is not a file or cannot be found" % self.old_binary_filename)
 
         if self.new_binary_filename and not os.path.isfile(self.new_binary_filename):
             unrecoverable_error(
-                "New binary'%s\' is not a file or cannot be found" % (self.new_binary_filename))
+                "New binary'%s\' is not a file or cannot be found" % self.new_binary_filename)
 
         self.objdump_command = self.bin_dir + "/" + self.bin_prefix + "objdump"
         self.nm_command = self.bin_dir + "/" + self.bin_prefix + "nm"
@@ -284,18 +284,18 @@ class Settings(object):
 
         if (not os.path.isfile(self.nm_command)) or (not os.access(self.nm_command, os.X_OK)):
             unrecoverable_error(
-                "nm command'%s\' is either not a file or not executable" % (self.nm_command))
+                "nm command'%s\' is either not a file or not executable" % self.nm_command)
 
         if (not os.path.isfile(self.size_command)) or (not os.access(self.size_command, os.X_OK)):
             unrecoverable_error(
-                "size command'%s\' is either not a file or not executable" % (self.size_command))
+                "size command'%s\' is either not a file or not executable" % self.size_command)
 
         if self.old_info_file:
             if os.path.isfile(self.old_info_file):
                 with open(self.old_info_file, "r") as f:
                     self.old_binary_info = f.read()
             else:
-                unrecoverable_error("Unable to find old info file'%s\'" % (self.old_info_file))
+                unrecoverable_error("Unable to find old info file'%s\'" % self.old_info_file)
         else:
             self.old_binary_info = ""
 
@@ -304,7 +304,7 @@ class Settings(object):
                 with open(self.new_info_file, "r") as f:
                     self.new_binary_info = f.read()
             else:
-                unrecoverable_error("Unable to find new info file'%s\'" % (self.new_info_file))
+                unrecoverable_error("Unable to find new info file'%s\'" % self.new_info_file)
         else:
             self.new_binary_info = ""
 

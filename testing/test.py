@@ -59,24 +59,24 @@ def run_subprocess(cmd, cwd=os.getcwd(), env=None):
         output = o.decode("utf8")
         error = e.decode("utf8")
 
-    except (OSError) as e:
+    except OSError as e:
         print(e)
         sys.exit(1)
 
     if rc != 0:
         print("Failed running command %s in directory %s failed" % (str(cmd), cwd))
-        print("   exit code: %d" % (rc))
-        print("   stdout: %s" % (output))
-        print("   stderr: %s" % (error))
+        print("   exit code: %d" % rc)
+        print("   stdout: %s" % output)
+        print("   stderr: %s" % error)
         sys.exit(1)
 
     if verbose_output:
-        print("      exit code: %d" % (rc))
+        print("      exit code: %d" % rc)
         if len(output) > 0:
-            print("      stdout: %s" % (output))
+            print("      stdout: %s" % output)
 
         if len(error) > 0:
-            print("      stderr: %s" % (error))
+            print("      stderr: %s" % error)
 
     return [output, error]
 

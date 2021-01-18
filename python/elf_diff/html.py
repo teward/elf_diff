@@ -52,11 +52,11 @@ def generate_similar_symbol_details_title(similar_pair_id):
 
 
 def tag_symbol_name(symbol_name):
-    return "<span class=\"symbol_name\">%s</span>" % (symbol_name)
+    return "<span class=\"symbol_name\">%s</span>" % symbol_name
 
 
 def format_number(number):
-    return "<span class=\"number\">%s</span>" % (number)
+    return "<span class=\"number\">%s</span>" % number
 
 
 def highlight_number(number):
@@ -71,7 +71,7 @@ def highlight_number(number):
 
 
 def pre_highlight_source_code(src):
-    return "__ED_SOURCE_START__%s__ED_SOURCE_END__" % (src)
+    return "__ED_SOURCE_START__%s__ED_SOURCE_END__" % src
 
 
 def post_highlight_source_code(src):
@@ -110,7 +110,7 @@ def configure_template(settings, template_filename, keywords):
 
     try:
         replaced_content = creator.render(keywords)
-    except (jinja2.exceptions.TemplateError) as e:
+    except jinja2.exceptions.TemplateError as e:
         unrecoverable_error("Failed rendering jinja template \'" +
                             template_filename + "\'\n" + str(e))
 

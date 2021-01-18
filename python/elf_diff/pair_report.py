@@ -212,7 +212,7 @@ class PairReport(Report):
                     header=self.settings.symbols_html_header,
                     title=html.generate_symbol_details_title(symbol_name_html),
                     size_info=size_info))
-                html_lines.append("%s\n" % (symbol_differences))
+                html_lines.append("%s\n" % symbol_differences)
 
         return "\n".join(html_lines)
 
@@ -287,7 +287,7 @@ class PairReport(Report):
                 "<p>Old: %s</p>\n" % (html.generate_symbol_details_title(old_symbol_name_html)))
             html_lines.append(
                 "<p>New: %s</p>\n" % (html.generate_symbol_details_title(new_symbol_name_html)))
-            html_lines.append("%s\n" % (symbol_differences))
+            html_lines.append("%s\n" % symbol_differences)
 
         return "\n".join(html_lines)
 
