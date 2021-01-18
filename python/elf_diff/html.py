@@ -120,4 +120,7 @@ def configure_template(settings, template_filename, keywords):
 def configure_template_write(settings, template_filename, out_file, keywords):
     html_code = configure_template(settings, template_filename, keywords)
 
-    out_file.write(html_code.encode('utf-8'))
+    if python_version >= (3, 0, 0):
+        out_file.write(html_code)
+    else:
+        out_file.write(html_code.encode('utf-8', 'backslashreplace'))
