@@ -117,4 +117,4 @@ def configure_template(settings, template_filename, keywords):
 def configure_template_write(settings, template_filename, out_file, keywords):
     html_code = configure_template(settings, template_filename, keywords)
 
-    out_file.write(html_code.encode('utf-8'))
+    out_file.write(html_code)
