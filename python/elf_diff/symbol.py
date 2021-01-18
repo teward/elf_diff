@@ -70,7 +70,8 @@ class Symbol(object):
         # print list(diff)
         return post_highlight_source_code_remove_tags(indent + ("\n" + indent).join(list(diff)))
 
-    def get_differences_as_html(self, other):
+    # noinspection PyUnusedLocal
+    def get_differences_as_html(self, other, indent):
 
         import difflib
         diff_class = difflib.HtmlDiff(tabsize=4, wrapcolumn=200)
