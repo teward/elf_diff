@@ -30,7 +30,7 @@ class PairReport(Report):
 
     def __init__(self, settings):
 
-        super().__init__(settings)
+        super(PairReport, self).__init__(settings)
         self.validate_settings()
 
         self.binary_pair = BinaryPair(settings, settings.old_binary_filename,

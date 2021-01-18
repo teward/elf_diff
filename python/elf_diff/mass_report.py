@@ -31,7 +31,8 @@ class MassReport(Report):
 
     def __init__(self, settings):
 
-        super().__init__(settings)
+        super(MassReport, self).__init__(settings)
+
         self.binary_pairs = []
 
         if len(self.settings.mass_report_members) == 0:
