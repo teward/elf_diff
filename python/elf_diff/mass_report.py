@@ -96,7 +96,8 @@ class MassReport(Report):
 
         return "\n".join(table_lines_html)
 
-    def configure_jinja_keywords(self):
+    # noinspection PyUnusedLocal
+    def configure_jinja_keywords(self, skip_details):
 
         import datetime
 
