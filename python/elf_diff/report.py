@@ -55,7 +55,7 @@ class Report(object):
 
     def write_html(self, out_file, skip_details=False):
 
-        keywords = self.configureJinjaKeywords(skip_details)
+        keywords = self.configure_jinja_keywords(skip_details)
 
         html.configure_template_write(self.settings,
                                       self.getHTMLTemplate(),
