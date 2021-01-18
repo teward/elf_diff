@@ -59,7 +59,7 @@ class Report(object):
             html_file = "elf_diff_" + self.get_report_basename() + ".html"
 
         print("Writing html file " + html_file)
-        with open(html_file, "w", "utf-8") as f:
+        with open(html_file, mode="w", encoding="utf-8") as f:
             self.write_html(f)
 
         if self.settings.pdf_file:
