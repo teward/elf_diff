@@ -19,47 +19,47 @@
 # this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-from elf_diff.error_handling import unrecoverableError
+from elf_diff.error_handling import unrecoverable_error
 
 
-def escapeString(string):
+def escape_string(string):
     return string.replace("<", "&lt;").replace(">", "&gt;")
 
 
-def generateSymbolTableEntry(symbol_name):
+def generate_symbol_table_entry(symbol_name):
     return "<a name=\"table_%s\"><a href=\"#details_%s\">%s</a></a>" % \
            (symbol_name, symbol_name, symbol_name)
 
 
-def generateSymbolTableEntryLight(symbol_name):
+def generate_symbol_table_entry_light(symbol_name):
     return "<a href=\"#details_%s\">%s</a>" % \
            (symbol_name, symbol_name)
 
 
-def generateSymbolDetailsTitle(symbol_name):
+def generate_symbol_details_title(symbol_name):
     return "<a name=\"details_%s\"><a href=\"#table_%s\">%s</a></a>" % \
-           (symbol_name, symbol_name, tagSymbolName(symbol_name))
+           (symbol_name, symbol_name, tag_symbol_name(symbol_name))
 
 
-def generateSimilarSymbolTableEntry(similar_pair_id):
+def generate_similar_symbol_table_entry(similar_pair_id):
     return "<a name=\"similar_table_%s\"><a href=\"#similar_details_%s\">%s</a></a>" % \
            (similar_pair_id, similar_pair_id, similar_pair_id)
 
 
-def generateSimilarSymbolDetailsTitle(similar_pair_id):
+def generate_similar_symbol_details_title(similar_pair_id):
     return "<a name=\"similar_details_%s\"><a href=\"#similar_table_%s\">%s</a></a>" % \
            (similar_pair_id, similar_pair_id, similar_pair_id)
 
 
-def tagSymbolName(symbol_name):
+def tag_symbol_name(symbol_name):
     return "<span class=\"symbol_name\">%s</span>" % (symbol_name)
 
 
-def formatNumber(number):
+def format_number(number):
     return "<span class=\"number\">%s</span>" % (number)
 
 
-def highlightNumber(number):
+def highlight_number(number):
     if number > 0:
         css_class = "deterioration"
     elif number < 0:
@@ -70,26 +70,26 @@ def highlightNumber(number):
     return "<span  class=\"%s number\">%+d</span>" % (css_class, number)
 
 
-def preHighlightSourceCode(src):
+def pre_highlight_source_code(src):
     return "__ED_SOURCE_START__%s__ED_SOURCE_END__" % (src)
 
 
-def postHighlightSourceCode(src):
+def post_highlight_source_code(src):
     return src.replace("__ED_SOURCE_START__", "<span class=\"source\">") \
         .replace("__ED_SOURCE_END__", "</span>")
 
 
-def postHighlightSourceCodeRemoveTags(src):
+def post_highlight_source_code_remove_tags(src):
     return src.replace("__ED_SOURCE_START__", "") \
         .replace("__ED_SOURCE_END__", "")
 
 
-def formatNumberDelta(old_size, new_size):
+def format_number_delta(old_size, new_size):
     difference = new_size - old_size
-    return highlightNumber(new_size - old_size)
+    return highlight_number(new_size - old_size)
 
 
-def configureTemplate(settings, template_filename, keywords):
+def configure_template(settings, template_filename, keywords):
     import jinja2
     import os
     import inspect
@@ -106,18 +106,18 @@ def configureTemplate(settings, template_filename, keywords):
         creator = env.get_template(template_filename)
 
     except jinja2.exceptions.TemplateError as e:
-        unrecoverableError("Failed creating jinja creator\n" + str(e))
+        unrecoverable_error("Failed creating jinja creator\n" + str(e))
 
     try:
-        replacedContent = creator.render(keywords)
+        replaced_content = creator.render(keywords)
     except (jinja2.exceptions.TemplateError) as e:
-        unrecoverableError("Failed rendering jinja template \'" +
-                           template_filename + "\'\n" + str(e))
+        unrecoverable_error("Failed rendering jinja template \'" +
+                            template_filename + "\'\n" + str(e))
 
-    return replacedContent  # .encode('utf8')
+    return replaced_content  # .encode('utf8')
 
 
-def configureTemplateWrite(settings, template_filename, out_file, keywords):
-    html_code = configureTemplate(settings, template_filename, keywords)
+def configure_template_write(settings, template_filename, out_file, keywords):
+    html_code = configure_template(settings, template_filename, keywords)
 
     out_file.write(html_code)

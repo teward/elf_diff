@@ -38,7 +38,7 @@ new_binary2 = testing_dir + "/libelf_diff_test_static_2_new.a"
 verbose_output = True
 
 
-def runSubprocess(cmd, cwd=os.getcwd(), env=None):
+def run_subprocess(cmd, cwd=os.getcwd(), env=None):
     if not env:
         env = os.environ.copy()
 
@@ -88,18 +88,18 @@ class TestCommandLineArgs(unittest.TestCase):
         template_file = "output.tmpl.yml"
 
         [output, error] = \
-            runSubprocess([sys.executable, elf_diff_executable,
-                           "--old_binary_filename", old_binary,
-                           "--new_binary_filename", new_binary,
-                           "--old_alias", "an_old_alias",
-                           "--new_alias", "a_new_alias",
-                           "--old_info_file", testing_dir + "/old_binary_info.txt",
-                           "--new_info_file", testing_dir + "/new_binary_info.txt",
-                           "--build_info", "General build info",
-                           "--html_file", html_file,
-                           "--pdf_file", pdf_file,
-                           "--project_title", "Project title",
-                           "--driver_template_file", template_file])
+            run_subprocess([sys.executable, elf_diff_executable,
+                            "--old_binary_filename", old_binary,
+                            "--new_binary_filename", new_binary,
+                            "--old_alias", "an_old_alias",
+                            "--new_alias", "a_new_alias",
+                            "--old_info_file", testing_dir + "/old_binary_info.txt",
+                            "--new_info_file", testing_dir + "/new_binary_info.txt",
+                            "--build_info", "General build info",
+                            "--html_file", html_file,
+                            "--pdf_file", pdf_file,
+                            "--project_title", "Project title",
+                            "--driver_template_file", template_file])
 
         # Check if all output files exist
         #
@@ -131,8 +131,8 @@ class TestCommandLineArgs(unittest.TestCase):
             f.write("driver_template_file: " + template_file + "\n")
 
         [output, error] = \
-            runSubprocess([sys.executable, elf_diff_executable,
-                           "--driver_file", driver_yaml_file])
+            run_subprocess([sys.executable, elf_diff_executable,
+                            "--driver_file", driver_yaml_file])
 
         # Check if all output files exist
         #
@@ -168,8 +168,8 @@ class TestCommandLineArgs(unittest.TestCase):
             f.write("      short_name: \"Second binary name\"\n")
 
         [output, error] = \
-            runSubprocess([sys.executable, elf_diff_executable,
-                           "--driver_file", driver_yaml_file])
+            run_subprocess([sys.executable, elf_diff_executable,
+                            "--driver_file", driver_yaml_file])
 
         # Check if all output files exist
         #

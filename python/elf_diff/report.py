@@ -19,7 +19,7 @@
 # this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-from elf_diff.error_handling import unrecoverableError
+from elf_diff.error_handling import unrecoverable_error
 
 import elf_diff.html as html
 
@@ -38,7 +38,7 @@ class Report(object):
 
         print("Writing html file " + html_file)
         with codecs.open(html_file, "w", "utf-8") as f:
-            self.writeHTML(f)
+            self.write_html(f)
 
         if self.settings.pdf_file:
             import tempfile
@@ -47,7 +47,7 @@ class Report(object):
                 next(tempfile._get_candidate_names()) + ".html"
 
             with codecs.open(tmp_html_file, "w", "utf-8") as f:
-                self.writeHTML(f, skip_details=True)
+                self.write_html(f, skip_details=True)
 
             import pdfkit
             pdfkit.from_url(tmp_html_file, self.settings.pdf_file)
@@ -55,11 +55,11 @@ class Report(object):
             import os
             os.remove(tmp_html_file)
 
-    def writeHTML(self, out_file, skip_details=False):
+    def write_html(self, out_file, skip_details=False):
 
         keywords = self.configureJinjaKeywords(skip_details)
 
-        html.configureTemplateWrite(self.settings,
-                                    self.getHTMLTemplate(),
-                                    out_file,
-                                    keywords)
+        html.configure_template_write(self.settings,
+                                      self.getHTMLTemplate(),
+                                      out_file,
+                                      keywords)

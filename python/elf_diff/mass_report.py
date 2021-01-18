@@ -19,7 +19,7 @@
 # this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-from elf_diff.report import Report
+from elf_diff.report import Report, unrecoverable_error
 from elf_diff.binary_pair import BinaryPair
 
 import elf_diff.html as html
@@ -33,14 +33,14 @@ class MassReport(Report):
         self.settings = settings
 
         if len(self.settings.mass_report_members) == 0:
-            unrecoverableError("No mass report binary_pairs members defined in driver file")
+            unrecoverable_error("No mass report binary_pairs members defined in driver file")
 
-        self.generatePairReports()
+        self.generate_pair_reports()
 
-    def getReportBasename(self):
+    def get_report_basename(self):
         return "mass_report"
 
-    def generatePairReports(self):
+    def generate_pair_reports(self):
 
         self.binary_pairs = []
 
@@ -53,7 +53,7 @@ class MassReport(Report):
 
             self.binary_pairs.append(binary_pair)
 
-    def generateResourceConsumptionTableHTML(self):
+    def generate_resource_consumption_table_html(self):
 
         table_lines_html = []
 
@@ -66,19 +66,19 @@ class MassReport(Report):
                     short_name=binary_pair.short_name,
                     code_size_old_overall=binary_pair.old_binary.progmem_size,
                     code_size_new_overall=binary_pair.new_binary.progmem_size,
-                    code_size_delta_overall=html.formatNumberDelta(
+                    code_size_delta_overall=html.format_number_delta(
                         binary_pair.old_binary.progmem_size,
                         binary_pair.new_binary.progmem_size),
                     static_ram_old_overall=binary_pair.old_binary.static_ram_size,
                     static_ram_new_overall=binary_pair.new_binary.static_ram_size,
-                    static_ram_change_overall=html.formatNumberDelta(
+                    static_ram_change_overall=html.format_number_delta(
                         binary_pair.old_binary.static_ram_size,
                         binary_pair.new_binary.static_ram_size)
                 ))
 
         return "\n".join(table_lines_html)
 
-    def generateSymbolsTableHTML(self):
+    def generate_symbols_table_html(self):
 
         table_lines_html = []
 
@@ -98,15 +98,15 @@ class MassReport(Report):
 
         return "\n".join(table_lines_html)
 
-    def configureJinjaKeywords(self, skip_details):
+    def configure_jinja_keywords(self, skip_details):
 
         import datetime
 
-        resource_consumtption_table = self.generateResourceConsumptionTableHTML()
-        symbols_table = self.generateSymbolsTableHTML()
+        resource_consumtption_table = self.generate_resource_consumption_table_html()
+        symbols_table = self.generate_symbols_table_html()
 
         if self.settings.project_title:
-            doc_title = html.escapeString(self.settings.project_title)
+            doc_title = html.escape_string(self.settings.project_title)
         else:
             doc_title = "ELF Binary Comparison - Mass Report"
 
@@ -119,9 +119,9 @@ class MassReport(Report):
             "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
 
-    def getHTMLTemplate(self):
+    def get_html_template(self):
         return MassReport.html_template_file
 
 
-def generateMassReport(settings):
+def generate_mass_report(settings):
     MassReport(settings).generate()

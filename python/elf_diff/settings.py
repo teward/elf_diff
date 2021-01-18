@@ -23,7 +23,7 @@ import sys
 import os
 
 from elf_diff.binary_pair import BinaryPairSettings
-from elf_diff.error_handling import unrecoverableError
+from elf_diff.error_handling import unrecoverable_error
 
 
 class Parameter(object):
@@ -49,22 +49,22 @@ class Settings(object):
 
         self.repo_path = repo_path
 
-        self.setupParameters()
+        self.setup_parameters()
 
-        self.presetDefaults()
+        self.preset_defaults()
 
-        cmd_line_args = self.parseCommandLineArgs()
+        cmd_line_args = self.parse_command_line_args()
 
         if cmd_line_args.driver_file:
             self.driver_file = cmd_line_args.driver_file
 
-            self.readDriverFile()
+            self.read_driver_file()
 
-        self.considerCommandLineArgs(cmd_line_args)
+        self.consider_command_line_args(cmd_line_args)
 
-        self.validateAndInitSettings()
+        self.validate_and_init_settings()
 
-    def setupParameters(self):
+    def setup_parameters(self):
 
         self.parameters = [
             Parameter("old_binary_filename", "The old version of the elf binary.",
@@ -130,7 +130,7 @@ class Settings(object):
                       default=False, is_flag=True)
             ]
 
-    def presetDefaults(self):
+    def preset_defaults(self):
 
         self.mass_report_members = []
 
@@ -140,7 +140,7 @@ class Settings(object):
     def deprecated(self, desc):
         return "{desc} [deprecated]".format(desc=desc)
 
-    def parseCommandLineArgs(self):
+    def parse_command_line_args(self):
 
         import argparse
 
@@ -189,7 +189,7 @@ class Settings(object):
 
         return parser.parse_args(actual_args)
 
-    def readDriverFile(self):
+    def read_driver_file(self):
 
         import yaml
 
@@ -198,7 +198,7 @@ class Settings(object):
             try:
                 my_yaml = yaml.load(stream)
             except yaml.YAMLError as exc:
-                unrecoverableError(exc)
+                unrecoverable_error(exc)
 
         for parameter in self.parameters:
 
@@ -215,15 +215,15 @@ class Settings(object):
 
                 short_name = data_set.get("short_name")
                 if not short_name:
-                    unrecoverableError("No short_name defined for binary pair " + str(bin_pair_id))
+                    unrecoverable_error("No short_name defined for binary pair " + str(bin_pair_id))
 
                 old_binary = data_set.get("old_binary")
                 if not old_binary:
-                    unrecoverableError("No old_binary defined for binary pair " + str(bin_pair_id))
+                    unrecoverable_error("No old_binary defined for binary pair " + str(bin_pair_id))
 
                 new_binary = data_set.get("new_binary")
                 if not new_binary:
-                    unrecoverableError("No new_binary defined for binary pair " + str(bin_pair_id))
+                    unrecoverable_error("No new_binary defined for binary pair " + str(bin_pair_id))
 
                 bp = BinaryPairSettings(short_name,
                                         old_binary,
@@ -233,7 +233,7 @@ class Settings(object):
 
                 bin_pair_id += 1
 
-    def considerCommandLineArgs(self, cmd_line_args):
+    def consider_command_line_args(self, cmd_line_args):
 
         for parameter in self.parameters:
 
@@ -250,27 +250,27 @@ class Settings(object):
             pass
         elif len(cmd_line_args.binaries) == 2:
             if self.old_binary_filename:
-                unrecoverableError("Old binary filename redundantly defined")
+                unrecoverable_error("Old binary filename redundantly defined")
 
             else:
                 self.old_binary_filename = cmd_line_args.binaries[0]
 
             if self.new_binary_filename:
-                unrecoverableError("Old binary filename redundantly defined")
+                unrecoverable_error("Old binary filename redundantly defined")
 
             else:
                 self.new_binary_filename = cmd_line_args.binaries[1]
         else:
-            unrecoverableError("Please specify either none or two binaries")
+            unrecoverable_error("Please specify either none or two binaries")
 
-    def validateAndInitSettings(self):
+    def validate_and_init_settings(self):
 
         if self.old_binary_filename and not os.path.isfile(self.old_binary_filename):
-            unrecoverableError(
+            unrecoverable_error(
                 "Old binary'%s\' is not a file or cannot be found" % (self.old_binary_filename))
 
         if self.new_binary_filename and not os.path.isfile(self.new_binary_filename):
-            unrecoverableError(
+            unrecoverable_error(
                 "New binary'%s\' is not a file or cannot be found" % (self.new_binary_filename))
 
         self.objdump_command = self.bin_dir + "/" + self.bin_prefix + "objdump"
@@ -279,15 +279,15 @@ class Settings(object):
 
         if (not os.path.isfile(self.objdump_command)) or (
                 not os.access(self.objdump_command, os.X_OK)):
-            unrecoverableError("objdump command'%s\' is either not a file or not executable" % (
+            unrecoverable_error("objdump command'%s\' is either not a file or not executable" % (
                 self.objdump_command))
 
         if (not os.path.isfile(self.nm_command)) or (not os.access(self.nm_command, os.X_OK)):
-            unrecoverableError(
+            unrecoverable_error(
                 "nm command'%s\' is either not a file or not executable" % (self.nm_command))
 
         if (not os.path.isfile(self.size_command)) or (not os.access(self.size_command, os.X_OK)):
-            unrecoverableError(
+            unrecoverable_error(
                 "size command'%s\' is either not a file or not executable" % (self.size_command))
 
         if self.old_info_file:
@@ -295,7 +295,7 @@ class Settings(object):
                 with open(self.old_info_file, "r") as f:
                     self.old_binary_info = f.read()
             else:
-                unrecoverableError("Unable to find old info file'%s\'" % (self.old_info_file))
+                unrecoverable_error("Unable to find old info file'%s\'" % (self.old_info_file))
         else:
             self.old_binary_info = ""
 
@@ -304,7 +304,7 @@ class Settings(object):
                 with open(self.new_info_file, "r") as f:
                     self.new_binary_info = f.read()
             else:
-                unrecoverableError("Unable to find new info file'%s\'" % (self.new_info_file))
+                unrecoverable_error("Unable to find new info file'%s\'" % (self.new_info_file))
         else:
             self.new_binary_info = ""
 
@@ -314,7 +314,7 @@ class Settings(object):
         if not self.new_alias:
             self.new_alias = self.new_binary_filename
 
-    def writeParameterTemplateFile(self, filename, output_actual_values=False):
+    def write_parameter_template_file(self, filename, output_actual_values=False):
 
         import datetime
 
@@ -340,5 +340,5 @@ class Settings(object):
                 f.write("{name}: \"{value}\"\n".format(name=parameter.name, value=value))
                 f.write("\n")
 
-    def isFirmwareBinaryDefined(self):
+    def is_firmware_binary_defined(self):
         return self.old_binary_filename or self.new_binary_filename

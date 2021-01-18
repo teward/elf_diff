@@ -19,8 +19,8 @@
 # this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-from elf_diff.html import postHighlightSourceCodeRemoveTags
-from elf_diff.html import postHighlightSourceCode
+from elf_diff.html import post_highlight_source_code_remove_tags
+from elf_diff.html import post_highlight_source_code
 
 
 class Symbol(object):
@@ -33,7 +33,7 @@ class Symbol(object):
         self.size = 0
         self.type = "?"
 
-    def addInstructions(self, instruction_line):
+    def add_instructions(self, instruction_line):
         self.instruction_lines.append(instruction_line)
 
     def __eq__(self, other):
@@ -56,16 +56,16 @@ class Symbol(object):
         # print("Symbols equal")
         return True
 
-    def getDifferencesAsString(self, other, indent):
+    def get_differences_as_string(self, other, indent):
 
         import difflib
         # from difflib_data import *
 
         diff = difflib.ndiff(self.instruction_lines, other.instruction_lines)
         # print list(diff)
-        return postHighlightSourceCodeRemoveTags(indent + ("\n" + indent).join(list(diff)))
+        return post_highlight_source_code_remove_tags(indent + ("\n" + indent).join(list(diff)))
 
-    def getDifferencesAsHTML(self, other, indent):
+    def get_differences_as_html(self, other, indent):
 
         import difflib
         diff_class = difflib.HtmlDiff(tabsize=3, wrapcolumn=200)
@@ -77,16 +77,16 @@ class Symbol(object):
                                            context=True,
                                            numlines=1000)
 
-        return postHighlightSourceCode(diff_table)
+        return post_highlight_source_code(diff_table)
 
-    def getInstructionsBlock(self, indent):
+    def get_instructions_block(self, indent):
         return indent + ("\n" + indent).join(self.instruction_lines)
 
-    def livesInProgramMemory(self):
+    def lives_in_program_memory(self):
         return (self.type != 'B') and (self.type != 'b') and \
                (self.type != 'S') and (self.type != 's')
 
-    def parseSignature(self):
+    def parse_signature(self):
 
         import re
 
@@ -108,47 +108,47 @@ class Symbol(object):
             self.symbol_type = Symbol.type_data
 
     def init(self):
-        self.parseSignature()
+        self.parse_signature()
 
-    def wasFunctionRenamed(self, other):
+    def was_function_renamed(self, other):
         return self.namespace == other.namespace \
                and self.parameters == other.parameters
 
-    def hasFunctionSignatureChanged(self, other):
+    def has_function_signature_changed(self, other):
         return self.namespace == other.namespace \
                and self.actual_name == other.actual_name
 
-    def wasFunctionMoved(self, other):
+    def was_function_moved(self, other):
         return self.actual_name == other.actual_name \
                and self.parameters == other.parameters
 
-    def wasDataMoved(self, other):
+    def was_data_moved(self, other):
         return self.actual_name == other.actual_name \
                and self.size == other.size
 
-    def wasDataResized(self, other):
+    def was_data_resized(self, other):
         return self.actual_name == other.actual_name \
                and self.namespace == other.namespace
 
-    def wasDataRenamed(self, other):
+    def was_data_renamed(self, other):
         return self.namespace == other.namespace \
                and self.size == other.size
 
-    def isSimilar(self, other):
+    def is_similar(self, other):
 
         if not (self.symbol_parse_success and other.symbol_parse_success):
             return False
 
         if self.symbol_type == Symbol.type_function:
             if other.symbol_type == Symbol.type_function:
-                return self.wasFunctionRenamed(other) \
-                       or self.hasFunctionSignatureChanged(other) \
-                       or self.wasFunctionMoved(other)
+                return self.was_function_renamed(other) \
+                       or self.has_function_signature_changed(other) \
+                       or self.was_function_moved(other)
 
         elif self.symbol_type == Symbol.type_data:
             if other.symbol_type == Symbol.type_data:
-                return self.wasDataMoved(other) \
-                       or self.wasDataResized(other) \
-                       or self.wasDataRenamed(other)
+                return self.was_data_moved(other) \
+                       or self.was_data_resized(other) \
+                       or self.was_data_renamed(other)
 
         return False

@@ -28,7 +28,7 @@ def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
 
-def unrecoverableError(msg):
+def unrecoverable_error(msg):
     eprint("Error: {msg}".format(msg=msg))
 
     traceback.print_stack()

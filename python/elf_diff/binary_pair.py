@@ -42,9 +42,9 @@ class BinaryPair(object):
         self.old_binary = Binary(self.settings, self.old_binary_filename)
         self.new_binary = Binary(self.settings, self.new_binary_filename)
 
-        self.prepareMeasures()
+        self.prepare_measures()
 
-    def prepareMeasures(self):
+    def prepare_measures(self):
 
         from elf_diff.auxiliary import list_intersection
 
@@ -56,15 +56,15 @@ class BinaryPair(object):
         self.disappeared_symbol_names = sorted(self.old_symbol_names - self.new_symbol_names)
         self.new_symbol_names = sorted(self.new_symbol_names - self.old_symbol_names)
 
-        self.similar_symbols = self.determineSimilarSymbols()
+        self.similar_symbols = self.determine_similar_symbols()
 
-        self.computeNumSymbolsPersisting()
-        self.computeNumSymbolsDisappeared()
-        self.computeNumSymbolsNew()
+        self.compute_num_symbols_persisting()
+        self.compute_num_symbols_disappeared()
+        self.compute_num_symbols_new()
 
-        self.computeNumAssembliesDiffer()
+        self.compute_num_assemblies_differ()
 
-    def determineSimilarSymbols(self):
+    def determine_similar_symbols(self):
 
         import operator
 
@@ -75,7 +75,7 @@ class BinaryPair(object):
             for new_symbol_name in self.new_symbol_names:
                 new_symbol = self.new_binary.symbols[new_symbol_name]
 
-                if old_symbol.isSimilar(new_symbol):
+                if old_symbol.is_similar(new_symbol):
                     symbol_pairs.append([old_symbol, new_symbol])
 
         # First sort symbol pairs by size difference
@@ -101,7 +101,7 @@ class BinaryPair(object):
 
         return sorted_symbol_pairs
 
-    def computeNumSymbolsPersisting(self):
+    def compute_num_symbols_persisting(self):
 
         self.num_symbol_size_changes = 0
         for symbol_name in self.persisting_symbol_names:
@@ -110,21 +110,21 @@ class BinaryPair(object):
             if old_symbol.size != new_symbol.size:
                 self.num_symbol_size_changes += 1
 
-    def computeNumSymbolsDisappeared(self):
+    def compute_num_symbols_disappeared(self):
         self.num_bytes_disappeared = 0
         self.num_symbols_disappeared = len(self.disappeared_symbol_names)
         for symbol_name in self.disappeared_symbol_names:
             symbol = self.old_binary.symbols[symbol_name]
             self.num_bytes_disappeared += symbol.size
 
-    def computeNumSymbolsNew(self):
+    def compute_num_symbols_new(self):
         self.num_bytes_new = 0
         self.num_symbols_new = len(self.new_symbol_names)
         for symbol_name in self.new_symbol_names:
             symbol = self.new_binary.symbols[symbol_name]
             self.num_bytes_new += symbol.size
 
-    def computeNumAssembliesDiffer(self):
+    def compute_num_assemblies_differ(self):
         self.num_assemblies_differ = 0
         for symbol_name in self.persisting_symbol_names:
             old_symbol = self.old_binary.symbols[symbol_name]

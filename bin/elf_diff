@@ -35,9 +35,9 @@ if __name__ == "__main__":
 # noinspection PyPep8
 from elf_diff.settings import Settings
 # noinspection PyPep8
-from elf_diff.mass_report import generateMassReport
+from elf_diff.mass_report import generate_mass_report
 # noinspection PyPep8
-from elf_diff.pair_report import generatePairReport
+from elf_diff.pair_report import generate_pair_report
 
 if __name__ == "__main__":
 
@@ -47,12 +47,12 @@ if __name__ == "__main__":
     report_generated = False
 
     if settings.mass_report or len(settings.mass_report_members) > 0:
-        generateMassReport(settings)
+        generate_mass_report(settings)
         report_generated = True
-    elif settings.isFirmwareBinaryDefined():
-        generatePairReport(settings)
+    elif settings.is_firmware_binary_defined():
+        generate_pair_report(settings)
         report_generated = True
 
     if settings.driver_template_file:
-        settings.writeParameterTemplateFile(settings.driver_template_file,
-                                            output_actual_values=report_generated)
+        settings.write_parameter_template_file(settings.driver_template_file,
+                                               output_actual_values=report_generated)

@@ -20,9 +20,9 @@
 #
 
 from elf_diff.symbol import Symbol
-from elf_diff.error_handling import unrecoverableError
+from elf_diff.error_handling import unrecoverable_error
 from elf_diff.error_handling import warning
-from elf_diff.html import preHighlightSourceCode
+from elf_diff.html import pre_highlight_source_code
 
 
 class Binary(object):
@@ -35,16 +35,16 @@ class Binary(object):
         self.filename = filename
 
         if not self.filename:
-            unrecoverableError("No binary filename defined")
+            unrecoverable_error("No binary filename defined")
 
         if not os.path.isfile(self.filename):
-            unrecoverableError("Unable to find filename {filename}".format(filename=filename))
+            unrecoverable_error("Unable to find filename {filename}".format(filename=filename))
 
         self.symbols = {}
 
-        self.parseSymbols()
+        self.parse_symbols()
 
-    def readObjdumpOutput(self):
+    def read_objdump_output(self):
 
         import subprocess
 
@@ -58,7 +58,7 @@ class Binary(object):
 
         return output
 
-    def readNMOutput(self):
+    def read_nm_output(self):
 
         import subprocess
 
@@ -73,7 +73,7 @@ class Binary(object):
 
         return output
 
-    def readSizeOutput(self):
+    def read_size_output(self):
 
         import subprocess
 
@@ -87,16 +87,16 @@ class Binary(object):
 
         return output
 
-    def addSymbol(self, symbol):
+    def add_symbol(self, symbol):
         symbol.init()
 
         self.symbols[symbol.name] = symbol
 
-    def parseSymbols(self):
+    def parse_symbols(self):
 
         import re
 
-        size_output = self.readSizeOutput()
+        size_output = self.read_size_output()
 
         size_re = re.compile(r"^\s*([0-9]+)\s+([0-9]+)\s+([0-9]+)\s+([0-9]+)")
         for line in size_output.split("\n"):
@@ -112,7 +112,7 @@ class Binary(object):
 
                 break
 
-        objdump_output = self.readObjdumpOutput()
+        objdump_output = self.read_objdump_output()
 
         # print("Output:")
         # print("%s" % (objdump_output))
@@ -130,7 +130,7 @@ class Binary(object):
             header_match = re.match(header_line_re, line)
             if header_match:
                 if cur_symbol:
-                    self.addSymbol(cur_symbol)
+                    self.add_symbol(cur_symbol)
                 cur_symbol = Symbol(header_match.group(1))
                 n_symbols += 1
                 # print("Found symbol %s" % (header_match.group(1)))
@@ -138,17 +138,17 @@ class Binary(object):
                 instruction_line_match = re.match(instruction_line_re, line)
                 if instruction_line_match:
                     # print("Found instruction line \'%s\'" % (instruction_line_match.group(1)))
-                    cur_symbol.addInstructions(
+                    cur_symbol.add_instructions(
                         instruction_line_match.group(1) + instruction_line_match.group(2))
                     n_instruction_lines = n_instruction_lines + 1
                 else:
                     if cur_symbol:
-                        cur_symbol.addInstructions(preHighlightSourceCode(line))
+                        cur_symbol.add_instructions(pre_highlight_source_code(line))
 
         if cur_symbol:
-            self.addSymbol(cur_symbol)
+            self.add_symbol(cur_symbol)
 
-        nm_output = self.readNMOutput()
+        nm_output = self.read_nm_output()
 
         nm_regex = re.compile(r"^[0-9A-Fa-f]+\s([0-9A-Fa-f]+)\s(\w)\s(.+)")
         for line in nm_output.split("\n"):
@@ -164,7 +164,7 @@ class Binary(object):
                     data_symbol = Symbol(symbol_name)
                     data_symbol.size = int(symbol_size_str)
                     data_symbol.type = symbol_type
-                    self.addSymbol(data_symbol)
+                    self.add_symbol(data_symbol)
                 else:
                     self.symbols[symbol_name].size = int(symbol_size_str)
                     self.symbols[symbol_name].type = symbol_type
