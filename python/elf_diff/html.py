@@ -20,6 +20,7 @@
 #
 
 import platform
+python_version = tuple(map(int, platform.python_version_tuple()))
 
 from elf_diff.error_handling import unrecoverable_error
 
@@ -119,4 +120,4 @@ def configure_template(settings, template_filename, keywords):
 def configure_template_write(settings, template_filename, out_file, keywords):
     html_code = configure_template(settings, template_filename, keywords)
 
-    out_file.write(html_code)
+    out_file.write(html_code.encode('utf-8'))
