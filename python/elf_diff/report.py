@@ -24,10 +24,6 @@ import platform
 import tempfile
 import pdfkit
 
-python_version = tuple(map(int, platform.python_version_tuple()))
-if python_version < (3, 0, 0):
-    import codecs
-
 import elf_diff.html as html
 
 
@@ -68,12 +64,8 @@ class Report(object):
 
         # Python 2 and Python 3 use different mechanisms for open();
         # this explains why codecs.open was used.
-        if python_version < (3, 0, 0):
-            with codecs.open(html_file, "w", "utf-8") as f:
-                self.write_html(f)
-        else:
-            with open(html_file, mode="w", encoding="utf-8") as f:
-                self.write_html(f)
+        with open(html_file, mode="w", encoding="utf-8") as f:
+            self.write_html(f)
 
         if self.settings.pdf_file:
             tmp_html_file = tempfile.NamedTemporaryFile(suffix='.html')

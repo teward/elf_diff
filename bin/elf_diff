@@ -24,6 +24,10 @@
 import sys
 import os
 import inspect
+import platform
+
+if tuple(map(int, platform.python_version_tuple())) < (3, 6, 0):
+    raise OSError("Invalid Python version, only Python versions 3.6 or newer are supported")
 
 bin_path = os.path.dirname(os.path.realpath(inspect.getfile(inspect.currentframe())))
 
