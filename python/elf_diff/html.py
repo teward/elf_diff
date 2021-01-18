@@ -89,6 +89,7 @@ def format_number_delta(old_size, new_size):
     return highlight_number(new_size - old_size)
 
 
+# noinspection PyUnboundLocalVariable
 def configure_template(settings, template_filename, keywords):
     import jinja2
     import os
@@ -104,7 +105,6 @@ def configure_template(settings, template_filename, keywords):
 
     try:
         creator = env.get_template(template_filename)
-
     except jinja2.exceptions.TemplateError as e:
         unrecoverable_error("Failed creating jinja creator\n" + str(e))
 
