@@ -32,7 +32,7 @@ class Report(object):
         if self.settings.html_file:
             html_file = self.settings.html_file
         else:
-            html_file = "elf_diff_" + self.getReportBasename() + ".html"
+            html_file = "elf_diff_" + self.get_report_basename() + ".html"
 
         print("Writing html file " + html_file)
         with codecs.open(html_file, "w", "utf-8") as f:
@@ -58,6 +58,6 @@ class Report(object):
         keywords = self.configure_jinja_keywords(skip_details)
 
         html.configure_template_write(self.settings,
-                                      self.getHTMLTemplate(),
+                                      self.get_html_template(),
                                       out_file,
                                       keywords)
