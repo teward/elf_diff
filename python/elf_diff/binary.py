@@ -28,11 +28,16 @@ from elf_diff.html import pre_highlight_source_code
 class Binary(object):
 
     def __init__(self, settings, filename):
-
         import os.path
 
         self.settings = settings
         self.filename = filename
+        self.text_size = None
+        self.data_size = None
+        self.bss_size = None
+        self.overall_size = None
+        self.progmem_size = None
+        self.static_ram_size = None
 
         if not self.filename:
             unrecoverable_error("No binary filename defined")

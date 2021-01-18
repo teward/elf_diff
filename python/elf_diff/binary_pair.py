@@ -42,6 +42,19 @@ class BinaryPair(object):
         self.old_binary = Binary(self.settings, self.old_binary_filename)
         self.new_binary = Binary(self.settings, self.new_binary_filename)
 
+        # Instance attributes need initialized in __init__
+        self.old_symbol_names = None
+        self.persisting_symbol_names = None
+        self.disappeared_symbol_names = None
+        self.new_symbol_names = None
+        self.similar_symbols = None
+        self.num_symbol_size_changes = 0
+        self.num_bytes_disappeared = 0
+        self.num_symbols_disappeared = 0
+        self.num_bytes_new = 0
+        self.num_symbols_new = 0
+        self.num_assemblies_differ = 0
+
         self.prepare_measures()
 
     def prepare_measures(self):
@@ -118,14 +131,12 @@ class BinaryPair(object):
             self.num_bytes_disappeared += symbol.size
 
     def compute_num_symbols_new(self):
-        self.num_bytes_new = 0
         self.num_symbols_new = len(self.new_symbol_names)
         for symbol_name in self.new_symbol_names:
             symbol = self.new_binary.symbols[symbol_name]
             self.num_bytes_new += symbol.size
 
     def compute_num_assemblies_differ(self):
-        self.num_assemblies_differ = 0
         for symbol_name in self.persisting_symbol_names:
             old_symbol = self.old_binary.symbols[symbol_name]
             new_symbol = self.new_binary.symbols[symbol_name]

@@ -32,6 +32,8 @@ class MassReport(Report):
 
         self.settings = settings
 
+        self.binary_pairs = []
+
         if len(self.settings.mass_report_members) == 0:
             unrecoverable_error("No mass report binary_pairs members defined in driver file")
 
@@ -42,8 +44,6 @@ class MassReport(Report):
         return "mass_report"
 
     def generate_pair_reports(self):
-
-        self.binary_pairs = []
 
         for pair_report_setting in self.settings.mass_report_members:
             binary_pair = BinaryPair(self.settings,

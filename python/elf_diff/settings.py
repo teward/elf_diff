@@ -49,6 +49,18 @@ class Settings(object):
 
         self.repo_path = repo_path
 
+        self.parameters = []
+        self.mass_report_members = []
+        self.old_binary_filename = None
+        self.new_binary_filename = None
+        self.objdump_command = None
+        self.nm_command = None
+        self.size_command = None
+        self.old_binary_info = None
+        self.new_binary_info = None
+        self.old_alias = None
+        self.new_alias = None
+
         self.setup_parameters()
 
         self.preset_defaults()
@@ -131,8 +143,6 @@ class Settings(object):
             ]
 
     def preset_defaults(self):
-
-        self.mass_report_members = []
 
         for parameter in self.parameters:
             setattr(self, parameter.name, parameter.default)

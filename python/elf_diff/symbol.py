@@ -32,6 +32,11 @@ class Symbol(object):
         self.instruction_lines = []
         self.size = 0
         self.type = "?"
+        self.namespace = None
+        self.parameters = None
+        self.actual_name = self.name
+        self.symbol_parse_success = False
+        self.symbol_type = None
 
     def add_instructions(self, instruction_line):
         self.instruction_lines.append(instruction_line)
@@ -98,8 +103,6 @@ class Symbol(object):
             self.parameters = match.group(6)
             self.symbol_parse_success = True
         else:
-            self.actual_name = self.name
-            self.symbol_parse_success = False
             return
 
         if self.parameters:
