@@ -67,7 +67,7 @@ class Report(object):
 
         # Python 2 and Python 3 use different mechanisms for open();
         # this explains why codecs.open was used.
-        if platform.python_version_tuple() < [3, 0, 0]:
+        if tuple(map(int, platform.python_version_tuple())) < (3, 0, 0):
             with codecs.open(html_file, "w", "utf-8") as f:
                 self.write_html(f)
         else:
