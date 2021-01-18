@@ -107,7 +107,7 @@ class PairReport(Report):
         overal_symbol_size = 0
 
         for symbol_name in sorted(self.binary_pair.disappeared_symbol_names,
-                                  key=lambda symbol_name: old_binary.symbols[symbol_name].size,
+                                  key=lambda symb_name: old_binary.symbols[symb_name].size,
                                   reverse=True):
             symbol_name_html = html.escape_string(symbol_name)
             symbol = old_binary.symbols[symbol_name]
@@ -135,7 +135,7 @@ class PairReport(Report):
         overal_symbol_size = 0
 
         for symbol_name in sorted(self.binary_pair.new_symbol_names,
-                                  key=lambda symbol_name: new_binary.symbols[symbol_name].size,
+                                  key=lambda symb_name: new_binary.symbols[symb_name].size,
                                   reverse=True):
             symbol_name_html = html.escape_string(symbol_name)
             symbol = new_binary.symbols[symbol_name]
